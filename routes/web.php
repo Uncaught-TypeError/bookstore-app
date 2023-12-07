@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\Book;
 use Illuminate\Support\Facades\Route;
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 include __DIR__ . '/admin.php';
 
 Route::get('/', function () {
-    return view('welcome');
+    $books = Book::all();
+    return view('welcome')->with('books', $books);
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
