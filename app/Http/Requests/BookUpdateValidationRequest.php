@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BookUploadValidationRequest extends FormRequest
+class BookUpdateValidationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,7 +27,7 @@ class BookUploadValidationRequest extends FormRequest
             'book_price' => 'required|numeric|max:100000',
             'book_author' => "required|max:255",
             'categories.*' => 'required|exists:categories,id',
-            'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            // 'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -39,7 +39,7 @@ class BookUploadValidationRequest extends FormRequest
             'book_author.required' => 'Please enter book author.',
             'book_price.required' => 'Please enter book price.',
             'categories.required' => 'Please select category.',
-            'book_image.required' => 'Please upload book image.',
+            // 'book_image.required' => 'Please upload book image.',
         ];
     }
 }

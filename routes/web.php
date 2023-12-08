@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
@@ -21,17 +22,26 @@ include __DIR__ . '/admin.php';
 Route::get('/', function () {
     $books = Book::all();
     return view('welcome')->with('books', $books);
-});
+})->name('welcome');
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user', [UserController::class, 'homepage'])->name('user.homepage');
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+
+    Route::get('/user/cart', [UserController::class, 'userCart'])->name('user.cart');
 });
 
 Route::middleware('auth')->group(function () {
+    //Profile Routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Post Detail Routes
+    Route::get('/books/bookdetail/{book}', [BookController::class, 'bookDetail'])->name('books.bookdetail');
+
+    Route::post('/books/cart/put/{book}', [BookController::class, 'putCart'])->name('books.putCart');
+    Route::delete('/books/cart/remove/{book}', [BookController::class, 'removeCart'])->name('books.removeCart');
 });
 
 require __DIR__ . '/auth.php';

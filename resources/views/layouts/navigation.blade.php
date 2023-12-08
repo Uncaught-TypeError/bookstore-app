@@ -22,12 +22,22 @@
                 <!-- Navigation Links -->
                 @role('user')
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                            {{ __('Books') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('user.dashboard')" :active="request()->routeIs('user.dashboard')">
                             {{ __('Dashboard') }}
                         </x-nav-link>
                     </div>
                 @endrole
                 @role('admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                            {{ __('Books') }}
+                        </x-nav-link>
+                    </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                             {{ __('Dashboard') }}
@@ -36,6 +46,11 @@
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('admin.books.upload')" :active="request()->routeIs('admin.books.upload')">
                             {{ __('Upload Books') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.books.list')" :active="request()->routeIs('admin.books.list')">
+                            {{ __('Book List') }}
                         </x-nav-link>
                     </div>
                 @endrole

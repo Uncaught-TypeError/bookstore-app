@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <form method="post" action="{{ route('admin.books.post') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('admin.books.update', $book->id) }}" enctype="multipart/form-data">
         @csrf
         <div class="pb-12">
             <div class="max-w-7xl mx-auto mt-4 sm:px-6 lg:px-8 space-y-6">
@@ -13,7 +13,7 @@
                     <div class="w-full md:w-1/2 p-4 md:p-8">
                         <header class="mb-6">
                             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                                {{ __('Book Information') }}
+                                Edit <span class="text-red-500">{{ $book->book_name }}</span> Infomation
                             </h2>
 
                             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
@@ -24,19 +24,21 @@
                             <div id="Book_Name" class="">
                                 <x-input-label for="book_name" :value="__('Book Name')" />
                                 <x-text-input id="book_name" name="book_name" type="text" class="mt-1 block w-full"
-                                    required autofocus autocomplete="book_name" />
+                                    required autofocus autocomplete="book_name" value="{{ $book->book_name }}" />
                                 <x-input-error class="mt-2" :messages="$errors->get('book_name')" />
                             </div>
                             <div id="Book_Author" class="">
                                 <x-input-label for="book_author" :value="__('Book Author')" />
-                                <x-text-input id="book_author" name="book_author" type="text"
-                                    class="mt-1 block w-full" required autofocus autocomplete="book_author" />
+                                <x-text-input id="book_author" value="{{ $book->book_author }}" name="book_author"
+                                    type="text" class="mt-1 block w-full" required autofocus
+                                    autocomplete="book_author" />
                                 <x-input-error class="mt-2" :messages="$errors->get('book_author')" />
                             </div>
                             <div id="Book_Price" class="">
                                 <x-input-label for="book_price" :value="__('Book Price')" />
-                                <x-text-input id="book_price" name="book_price" type="number" class="mt-1 block w-full"
-                                    required autofocus autocomplete="book_price" />
+                                <x-text-input id="book_price" value="{{ $book->book_price }}" name="book_price"
+                                    type="number" class="mt-1 block w-full" required autofocus
+                                    autocomplete="book_price" />
                                 <x-input-error class="mt-2" :messages="$errors->get('book_price')" />
                             </div>
                             <div id="Book_Category">
@@ -45,7 +47,10 @@
                                     class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
                                     name="categories[]">
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        <option value="{{ $category->id }}"
+                                            {{ $book->categories->contains('id', $category->id) ? 'selected' : '' }}>
+                                            {{ $category->category_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                                 <x-input-error class="mt-2" :messages="$errors->get('book_category')" />
@@ -54,7 +59,7 @@
                                 <x-input-label for="book_desc" :value="__('Book Description')" />
                                 <textarea id="book_desc" name="book_desc"
                                     class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
-                                    required autofocus autocomplete="book_desc"></textarea>
+                                    required autofocus autocomplete="book_desc">{{ $book->book_desc }}</textarea>
                                 <x-input-error class="mt-2" :messages="$errors->get('book_desc')" />
                             </div>
                             <div class="flex items-center gap-4">
@@ -64,12 +69,13 @@
                     </div>
                     <div class="w-full md:w-1/2 p-4 md:p-8">
                         <div style="width: 100%; height: 400px;">
-                            <img id="preview_img" src="https://dummyimage.com/150x100" style="height: 100%"
-                                alt="">
+                            <img id="preview_img"
+                                src="{{ $book->book_image ? Storage::url($book->book_image) : 'https://dummyimage.com/150x100' }}"
+                                style="height: 100%" alt="">
                         </div>
                         <input type="file" id="image" name="book_image" onchange="loadFile(event)"
                             class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
-                            required>
+                            value="{{ $book->book_image }}">
                         <x-input-error class="mt-2" :messages="$errors->get('book_image')" />
                     </div>
                 </div>
