@@ -1,5 +1,4 @@
 <x-app-layout>
-
     <div class="py-5">
         <div class="container mx-auto mt-10">
             <div class="flex shadow-md my-10">
@@ -102,16 +101,34 @@
                         <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full">
                     </div> --}}
                     {{-- <button class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">Apply</button> --}}
-                    <div class="border-t mt-8">
-                        <div class="flex font-semibold justify-between py-6 text-sm uppercase text-white">
-                            <span>Total cost</span>
-                            <span id="totalCost">{{ $totalCost }}</span>
+                    <form action="{{ route('user.checkout', $totalCost) }}" method="post">
+                        @csrf
+                        @php
+                            $cartBookIds = [];
+                            foreach ($bookinCarts as $boc) {
+                                $book = App\Models\Book::where('id', $boc->book_id)->first();
+                                $cartBookIds[] = $book->id;
+                            }
+                            session(['cart_bookIds' => $cartBookIds]);
+                        @endphp
+                        <input type="hidden" name="totalCheckOutPrice" id="totalCheckOutPriceInput"
+                            value="{{ $totalCost }}">
+                        <div class="border-t mt-8">
+                            <div class="flex font-semibold justify-between py-6 text-sm uppercase text-white">
+                                <span>Total cost</span>
+                                <span id="totalCost">{{ $totalCost }}</span>
+                            </div>
+                            @if ($cart_empty == 0)
+                                <button
+                                    class="bg-red-500 font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+                            @else
+                                <button
+                                    class="bg-red-500 font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full"
+                                    disabled>Checkout</button>
+                            @endif
                         </div>
-                        <button
-                            class="bg-red-500 font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
-                    </div>
+                    </form>
                 </div>
-
             </div>
         </div>
     </div>
@@ -253,6 +270,7 @@
 
         function updateTotalCost() {
             totalCost.textContent = totalCheckOutPrice;
+            document.getElementById('totalCheckOutPriceInput').value = totalCheckOutPrice;
         }
 
     });

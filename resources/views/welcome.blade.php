@@ -860,32 +860,34 @@
             </div>
         @endif
 
-        <div class="sm:fixed sm:top-0 sm:left-0 p-6 text-right z-10 flex gap-2">
-            <a href="{{ route('user.cart') }}"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">My
-                Cart</a>
-            <div class="relative">
-                <svg viewBox="0 0 21 21" style="color: rgb(255, 0, 0); width: 25px" xmlns="http://www.w3.org/2000/svg">
-                    <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
-                        <path
-                            d="m3 2.5h12.5l-1.5855549 5.54944226c-.2453152.85860311-1.0300872 1.45055774-1.9230479 1.45055774h-6.70131161c-1.01909844 0-1.87522688-.76627159-1.98776747-1.77913695l-.80231812-7.22086305h-2"
-                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                        <g fill="currentColor">
-                            <circle cx="5" cy="12" r="1" />
-                            <circle cx="13" cy="12" r="1" />
+        @unlessrole('admin')
+            <div class="sm:fixed sm:top-0 sm:left-0 p-6 text-right z-10 flex gap-2">
+                <a href="{{ route('user.cart') }}"
+                    class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">My
+                    Cart</a>
+                <div class="relative">
+                    <svg viewBox="0 0 21 21" style="color: rgb(255, 0, 0); width: 25px" xmlns="http://www.w3.org/2000/svg">
+                        <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
+                            <path
+                                d="m3 2.5h12.5l-1.5855549 5.54944226c-.2453152.85860311-1.0300872 1.45055774-1.9230479 1.45055774h-6.70131161c-1.01909844 0-1.87522688-.76627159-1.98776747-1.77913695l-.80231812-7.22086305h-2"
+                                stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+                            <g fill="currentColor">
+                                <circle cx="5" cy="12" r="1" />
+                                <circle cx="13" cy="12" r="1" />
+                            </g>
                         </g>
-                    </g>
-                </svg>
-                @if (Auth::user())
-                    @php
-                        $user_id = Auth::user()->id;
-                        $bookInCart = App\Models\MyCart::where('user_id', $user_id)->get();
-                    @endphp
-                    <span class="absolute left-6 top-2 text-red-600"
-                        style="border-radius: 50%">{{ $bookInCart->count() }}</span>
-                @endif
+                    </svg>
+                    @if (Auth::user())
+                        @php
+                            $user_id = Auth::user()->id;
+                            $bookInCart = App\Models\MyCart::where('user_id', $user_id)->get();
+                        @endphp
+                        <span class="absolute left-6 top-2 text-red-600"
+                            style="border-radius: 50%">{{ $bookInCart->count() }}</span>
+                    @endif
+                </div>
             </div>
-        </div>
+        @endunlessrole
 
         <div class="max-w-7xl mx-auto p-6 lg:p-8">
             <div class="flex flex-col justify-center items-center">

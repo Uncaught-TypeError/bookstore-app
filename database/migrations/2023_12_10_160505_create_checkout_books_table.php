@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('checkout_books', function (Blueprint $table) {
             $table->id();
-            $table->string('book_name');
-            $table->string('book_author');
-            $table->float('book_price');
-            $table->text('book_desc');
-            $table->string('book_image')->nullable();
-            $table->string('book_file')->nullable();
+            $table->unsignedBigInteger('checkout_id');
+            $table->unsignedBigInteger('book_id');
             $table->timestamps();
+
+            $table->foreign('checkout_id')->references('id')->on('checkouts')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
         });
     }
 
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('checkout_books');
     }
 };

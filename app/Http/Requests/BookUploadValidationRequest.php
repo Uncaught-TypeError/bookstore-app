@@ -28,6 +28,7 @@ class BookUploadValidationRequest extends FormRequest
             'book_author' => "required|max:255",
             'categories.*' => 'required|exists:categories,id',
             'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'book_file' => 'required|mimes:pdf,doc,docx',
         ];
     }
 
@@ -40,6 +41,8 @@ class BookUploadValidationRequest extends FormRequest
             'book_price.required' => 'Please enter book price.',
             'categories.required' => 'Please select category.',
             'book_image.required' => 'Please upload book image.',
+            'book_file.required' => 'Please upload book file.',
+            'book_file.mimes' => 'The file must be of type: pdf, doc, or docx.',
         ];
     }
 }

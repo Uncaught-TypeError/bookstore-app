@@ -16,6 +16,7 @@
                                     class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                                     <th class="px-4 py-3">Title</th>
                                     <th class="px-4 py-3">Image</th>
+                                    <th class="px-4 py-3">File</th>
                                     <th class="px-4 py-3">Categories</th>
                                     <th class="px-4 py-3">Author</th>
                                     <th class="px-4 py-3">Price</th>
@@ -40,6 +41,10 @@
                                                 class="text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">{{ Str::limit($book->book_image, 20) ?? '' }}</span>
                                         </td>
                                         <td class="px-4 py-3 text-xs border max-w-xs whitespace-normal">
+                                            <span
+                                                class="text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">{{ Str::limit($book->book_file, 20) ?? '' }}</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-xs border max-w-xs whitespace-normal">
                                             @foreach ($book->categories as $category)
                                                 <span
                                                     class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">
@@ -51,7 +56,7 @@
                                             <span
                                                 class="text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">{{ $book->book_author ?? '' }}</span>
                                         </td>
-                                        <td class="px-4 py-3 text-xs border">
+                                        <td class="px-4 py-3 text-xs border w-full">
                                             <span class="px-2 py-1 font-semibold leading-tight rounded-sm">$
                                                 {{ $book->book_price ?? '' }}</span>
                                         </td>
@@ -60,7 +65,7 @@
                                                 class="px-2 py-1 font-semibold leading-tight rounded-sm">{{ Str::limit($book->book_desc, 20) }}</span>
                                         </td>
                                         <td class="px-4 py-3 text-sm border">
-                                            <div class="flex justify-around">
+                                            <div class="flex justify-around gap-3">
                                                 <a href="{{ route('admin.books.edit', $book->id) }}"
                                                     class="text-blue-400 uppercase font-semibold hover:text-blue-500">Edit</a>
                                                 <form action="{{ route('admin.books.delete', $book->id) }}"

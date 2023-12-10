@@ -27,8 +27,12 @@ Route::get('/', function () {
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user', [UserController::class, 'homepage'])->name('user.homepage');
     Route::get('/user/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/user/library', [UserController::class, 'library'])->name('user.library');
 
     Route::get('/user/cart', [UserController::class, 'userCart'])->name('user.cart');
+    Route::post('/user/checkout', [UserController::class, 'userCheckout'])->name('user.checkout');
+    Route::get('/user/view/{book_id}', [UserController::class, 'viewPdf'])->name('view.pdf');
+    Route::get('/user/download/{book_id}', [UserController::class, 'downloadPdf'])->name('download.pdf');
 });
 
 Route::middleware('auth')->group(function () {

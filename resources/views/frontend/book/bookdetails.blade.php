@@ -16,18 +16,18 @@
                     More Information for {{ $book->book_name }}
                 </span>
                 <div class="mx-auto lg:w-4/6 pt-10">
-                    <div class="rounded-lg h-96 overflow-hidden">
+                    <div class="rounded-lg h-96 overflow-hidden mb-10">
                         <img alt="content" class="object-scale-down h-full w-full"
                             src="{{ $book->book_image ? Storage::url($book->book_image) : 'https://dummyimage.com/1000x750' }}">
                     </div>
-                    <div class="flex justify-around w-full items-center p-5">
+                    {{-- <div class="flex justify-around w-full items-center p-5">
+                        <a href="{{ route('download.pdf', $book->id) }}"
+                            class="border p-2 sm:p-3 border-black bg-gray-500 hover:bg-gray-600 rounded-lg cursor-pointer text-sm sm:text-base">Read
+                            Book</a>
                         <a href=""
-                            class="border p-2 sm:p-3 border-black bg-gray-500 hover:bg-gray-600 rounded-lg cursor-pointer text-sm sm:text-base">View
-                            Images</a>
-                        <a href=""
-                            class="border p-2 sm:p-3 border-black bg-gray-500 hover:bg-gray-600 rounded-lg cursor-pointer text-sm sm:text-base">View
-                            Tour Gallery</a>
-                    </div>
+                            class="border p-2 sm:p-3 border-black bg-gray-500 hover:bg-gray-600 rounded-lg cursor-pointer text-sm sm:text-base">
+                            Download Book</a>
+                    </div> --}}
                     <div class="flex flex-col sm:flex-row border-t">
                         <div class="text-center sm:w-1/3 sm:py-3 sm:pr-8">
                             <div class="flex flex-col items-center justify-center text-center">
@@ -66,21 +66,90 @@
                                     {{ $book->book_desc }}
                                 </p>
                             </div>
-                            <a href="" class="inline-flex text-xl items-center text-red-500 cursor-pointer">Add
-                                to Cart
-                                <svg viewBox="0 0 21 21" style="color: rgb(255, 255, 255); width: 30px"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
-                                        <path
-                                            d="m3 2.5h12.5l-1.5855549 5.54944226c-.2453152.85860311-1.0300872 1.45055774-1.9230479 1.45055774h-6.70131161c-1.01909844 0-1.87522688-.76627159-1.98776747-1.77913695l-.80231812-7.22086305h-2"
-                                            stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                                        <g fill="currentColor">
-                                            <circle cx="5" cy="12" r="1" />
-                                            <circle cx="13" cy="12" r="1" />
-                                        </g>
-                                    </g>
-                                </svg>
-                            </a>
+                            @if (Auth::user())
+                                @php
+                                    $user_id = Auth::user()->id;
+                                    $bookInCart = App\Models\MyCart::where('user_id', $user_id)
+                                        ->where('book_id', $book->id)
+                                        ->first();
+                                @endphp
+                                @unlessrole('admin')
+                                    @if ($bookInCart)
+                                        <div>
+                                            <form action="{{ route('books.removeCart', $book->id) }}" method="post"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="inline-flex text-xl items-center text-red-500 cursor-pointer">Remove
+                                                    from Cart
+                                                    <svg viewBox="0 0 21 21" style="color: rgb(255, 255, 255); width: 30px"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
+                                                            <path
+                                                                d="m3 2.5h12.5l-1.5855549 5.54944226c-.2453152.85860311-1.0300872 1.45055774-1.9230479 1.45055774h-6.70131161c-1.01909844 0-1.87522688-.76627159-1.98776747-1.77913695l-.80231812-7.22086305h-2"
+                                                                stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <g fill="currentColor">
+                                                                <circle cx="5" cy="12" r="1" />
+                                                                <circle cx="13" cy="12" r="1" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @else
+                                        <div>
+                                            <form action="{{ route('books.putCart', $book->id) }}" method="post"
+                                                enctype="multipart/form-data">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="inline-flex text-xl items-center text-red-500 cursor-pointer">Add
+                                                    to Cart
+                                                    <svg viewBox="0 0 21 21" style="color: rgb(255, 255, 255); width: 30px"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
+                                                            <path
+                                                                d="m3 2.5h12.5l-1.5855549 5.54944226c-.2453152.85860311-1.0300872 1.45055774-1.9230479 1.45055774h-6.70131161c-1.01909844 0-1.87522688-.76627159-1.98776747-1.77913695l-.80231812-7.22086305h-2"
+                                                                stroke="currentColor" stroke-linecap="round"
+                                                                stroke-linejoin="round" />
+                                                            <g fill="currentColor">
+                                                                <circle cx="5" cy="12" r="1" />
+                                                                <circle cx="13" cy="12" r="1" />
+                                                            </g>
+                                                        </g>
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
+                                @endunlessrole
+                            @else
+                                <div>
+                                    <form action="{{ route('books.putCart', $book->id) }}" method="post"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <button type="submit"
+                                            class="inline-flex text-xl items-center text-red-500 cursor-pointer">Add
+                                            to Cart
+                                            <svg viewBox="0 0 21 21" style="color: rgb(255, 255, 255); width: 30px"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <g fill="none" fill-rule="evenodd" transform="translate(2 4)">
+                                                    <path
+                                                        d="m3 2.5h12.5l-1.5855549 5.54944226c-.2453152.85860311-1.0300872 1.45055774-1.9230479 1.45055774h-6.70131161c-1.01909844 0-1.87522688-.76627159-1.98776747-1.77913695l-.80231812-7.22086305h-2"
+                                                        stroke="currentColor" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                    <g fill="currentColor">
+                                                        <circle cx="5" cy="12" r="1" />
+                                                        <circle cx="13" cy="12" r="1" />
+                                                    </g>
+                                                </g>
+                                            </svg>
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

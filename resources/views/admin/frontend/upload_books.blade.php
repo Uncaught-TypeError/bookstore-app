@@ -62,15 +62,24 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/2 p-4 md:p-8">
-                        <div style="width: 100%; height: 400px;">
-                            <img id="preview_img" src="https://dummyimage.com/150x100" style="height: 100%"
-                                alt="">
+                    <div class="w-full md:w-1/2 p-4 md:p-8 flex flex-col justify-evenly">
+                        <div id="Book_Img">
+                            <div style="width: 100%; height: 400px;">
+                                <img id="preview_img" src="https://dummyimage.com/150x100" style="height: 100%"
+                                    alt="">
+                            </div>
+                            <input type="file" id="image" name="book_image" onchange="loadFile(event)"
+                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                required>
+                            <x-input-error class="mt-2" :messages="$errors->get('book_image')" />
                         </div>
-                        <input type="file" id="image" name="book_image" onchange="loadFile(event)"
-                            class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
-                            required>
-                        <x-input-error class="mt-2" :messages="$errors->get('book_image')" />
+                        <div id="Book_file">
+                            <x-input-label for="book_file" :value="__('Book File')" />
+                            <input type="file" name="book_file"
+                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                required>
+                            <x-input-error class="mt-2" :messages="$errors->get('book_file')" />
+                        </div>
                     </div>
                 </div>
             </div>

@@ -35,9 +35,12 @@ class AdminController extends Controller
             'book_author' => $request->book_author,
             'book_price' => $request->book_price,
             'book_image' => null,
+            'book_file' => null,
         ]);
 
         $book->categories()->attach($request->input('categories'));
+
+        //Book Image
         if ($request->hasFile('book_image')) {
             $image = $request->file('book_image');
             $imagePath = $image->store('public/bookimage');
@@ -49,6 +52,16 @@ class AdminController extends Controller
             $book->book_image = $filename;
         } else {
             $book->book_image = null;
+        }
+
+        //Book File
+        if ($request->hasFile('book_file')) {
+            $file = $request->file('book_file');
+            $filePath = $file->store('public/bookfiles');
+            $filename = str_replace('public/', '', $filePath);
+            $book->book_file = $filename;
+        } else {
+            $book->book_file = null;
         }
 
         $book->update();
@@ -81,6 +94,13 @@ class AdminController extends Controller
             $filename = str_replace('public/', '', $imagePath);
             // dd($filename);
             $book->book_image = $filename;
+        }
+
+        if ($request->hasFile('book_file')) {
+            $file = $request->file('book_file');
+            $filePath = $file->store('public/bookfiles');
+            $filename = str_replace('public/', '', $filePath);
+            $book->book_file = $filename;
         }
 
         $book->update();
