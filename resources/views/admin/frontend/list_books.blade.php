@@ -1,6 +1,11 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-red-600 dark:text-red-200 leading-tight mb-3">
+            {{ __('Admin Book List') }}
+        </h2>
+    </x-slot>
 
-    <div class="py-12 w-full">
+    <div class="py-5 w-full">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <section class="container mx-auto p-6">
                 <div class="flex justify-end p-4">
@@ -13,7 +18,7 @@
                         <table class="w-full">
                             <thead>
                                 <tr
-                                    class="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                                    class="text-md font-semibold tracking-wide text-left text-red-600 bg-gray-100 uppercase border-b border-gray-600">
                                     <th class="px-4 py-3">Title</th>
                                     <th class="px-4 py-3">Image</th>
                                     <th class="px-4 py-3">File</th>
@@ -47,7 +52,7 @@
                                         <td class="px-4 py-3 text-xs border max-w-xs whitespace-normal">
                                             @foreach ($book->categories as $category)
                                                 <span
-                                                    class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">
+                                                    class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">
                                                     {{ $category->category_name ?? '' }}
                                                 </span>
                                             @endforeach
@@ -67,7 +72,7 @@
                                         <td class="px-4 py-3 text-sm border">
                                             <div class="flex justify-around gap-3">
                                                 <a href="{{ route('admin.books.edit', $book->id) }}"
-                                                    class="text-blue-400 uppercase font-semibold hover:text-blue-500">Edit</a>
+                                                    class="text-red-400 uppercase font-semibold hover:text-red-500">Edit</a>
                                                 <form action="{{ route('admin.books.delete', $book->id) }}"
                                                     method="POST" onsubmit="return confirm('Are you sure?');">
                                                     @csrf

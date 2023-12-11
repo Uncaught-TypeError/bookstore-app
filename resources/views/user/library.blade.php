@@ -4,7 +4,7 @@
             {{ __('User Library') }}
         </h2>
     </x-slot>
-    <section class="px-1 flex flex-wrap justify-center items-center gap-3">
+    <section class="px-1 mt-5 flex flex-wrap justify-center items-center gap-3">
         @foreach ($allBooks as $book)
             <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:border-gray-700">
                 <a href="#">

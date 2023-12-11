@@ -2,7 +2,7 @@
     <section class="mt-5">
         <div class="p-5 flex justify-around">
             <a href="{{ route('welcome') }}"
-                class="flex text-sm sm:text-base uppercase font-roboto text-white hover:text-red-500">
+                class="flex text-sm sm:text-base uppercase font-roboto dark:text-white text-black hover:text-red-500">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-6 h-6 mr-2 ">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
@@ -10,7 +10,7 @@
                 Go Back to Browsing?
             </a>
         </div>
-        <section class="text-white flex justify-center items-center">
+        <section class="dark:text-white text-black flex justify-center items-center">
             <div class="container justify-center items-center text-center mx-auto flex flex-col px-5 py-5">
                 <span class="flex items-center justify-center text-2xl">
                     More Information for {{ $book->book_name }}
@@ -53,7 +53,7 @@
                                 @role('admin')
                                     <div class="mb-2 flex items-center justify-between gap-2">
                                         <a href="{{ route('admin.books.edit', $book->id) }}"
-                                            class="border p-1 sm:p-1 sm:px-2 border-black bg-black text-white hover:text-red-500 rounded-lg cursor-pointer text-sm sm:text-base">Edit
+                                            class="border p-1 sm:p-1 sm:px-2 bg-red-600 text-white hover:text-red-100 rounded-lg cursor-pointer text-sm sm:text-base">Edit
                                             Book</a>
                                     </div>
                                 @endrole

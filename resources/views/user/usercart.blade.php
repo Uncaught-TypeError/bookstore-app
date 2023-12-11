@@ -4,16 +4,16 @@
             <div class="flex shadow-md my-10">
                 <div class="w-3/4 px-10 py-10">
                     <div class="flex justify-between border-b pb-8">
-                        <h1 class="font-semibold text-2xl text-white">Book Cart</h1>
+                        <h1 class="font-semibold text-2xl dark:text-white text-black">Book Cart</h1>
                         <h2 class="font-semibold text-2xl text-red-600">{{ $bookinCarts->count() }} Books</h2>
                     </div>
                     <div class="flex mt-10 mb-5">
-                        <h3 class="font-semibold text-white text-xs uppercase w-2/5">Book Details</h3>
-                        <h3 class="font-semibold text-white text-xs uppercase w-1/5 text-center">Quantity
+                        <h3 class="font-semibold dark:text-white text-black text-xs uppercase w-2/5">Book Details</h3>
+                        <h3 class="font-semibold dark:text-white text-black text-xs uppercase w-1/5 text-center">Quantity
                         </h3>
-                        <h3 class="font-semibold text-white text-xs uppercase w-1/5 text-center">Price
+                        <h3 class="font-semibold dark:text-white text-black text-xs uppercase w-1/5 text-center">Price
                         </h3>
-                        <h3 class="font-semibold text-white text-xs uppercase w-1/5 text-center">Total
+                        <h3 class="font-semibold dark:text-white text-black text-xs uppercase w-1/5 text-center">Total
                         </h3>
                     </div>
                     @php
@@ -24,7 +24,7 @@
                             $book = App\Models\Book::where('id', $boc->book_id)->first();
                             $totalCost = $totalCost + $book->book_price;
                         @endphp
-                        <div class="flex items-center hover:bg-gray-700 -mx-8 px-6 py-5">
+                        <div class="flex items-center dark:hover:bg-gray-700 hover:bg-gray-200 -mx-8 px-6 py-5">
                             <div class="flex w-2/5"> <!-- product -->
                                 <div class="w-20">
                                     <img class="h-24"
@@ -32,11 +32,12 @@
                                         alt="">
                                 </div>
                                 <div class="flex flex-col justify-between ml-4 flex-grow">
-                                    <span class="font-bold text-sm text-white">{{ $book->book_name }}</span>
+                                    <span
+                                        class="font-bold text-sm dark:text-white text-black">{{ $book->book_name }}</span>
                                     <div class="flex flex-wrap">
                                         @foreach ($book->categories as $category)
                                             <span
-                                                class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">
+                                                class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-2.5 py-0.5 inline-block mb-1 rounded">
                                                 {{ $category->category_name ?? '' }}
                                             </span>
                                         @endforeach
@@ -46,13 +47,13 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"
-                                            class="font-semibold hover:text-red-500 text-white text-xs">Remove</button>
+                                            class="font-semibold hover:text-red-500 dark:text-white text-black text-xs">Remove</button>
                                     </form>
                                 </div>
                             </div>
                             <div class="flex justify-between w-1/5">
-                                <svg class="fill-current text-white w-3 cursor-pointer" viewBox="0 0 448 512"
-                                    id="minus-{{ $book->id }}">
+                                <svg class="fill-current dark:text-white text-black w-3 cursor-pointer"
+                                    viewBox="0 0 448 512" id="minus-{{ $book->id }}">
                                     <path
                                         d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                                 </svg>
@@ -60,25 +61,26 @@
                                 <input id="quantityInput-{{ $book->id }}"
                                     class="mx-2 text-dark border text-center w-32" type="number" value="1">
 
-                                <svg class="fill-current text-white w-3 cursor-pointer" viewBox="0 0 448 512"
-                                    id="plus-{{ $book->id }}">
+                                <svg class="fill-current dark:text-white text-black w-3 cursor-pointer"
+                                    viewBox="0 0 448 512" id="plus-{{ $book->id }}">
                                     <path
                                         d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
                                 </svg>
                             </div>
-                            <span class="text-center text-white w-1/5 font-semibold text-sm"
+                            <span class="text-center dark:text-white text-black w-1/5 font-semibold text-sm"
                                 id="bookPrice-{{ $book->id }}">
                                 {{ $book->book_price }}</span>
-                            <span class="text-center text-white w-1/5 font-semibold text-sm"
+                            <span class="text-center dark:text-white text-black w-1/5 font-semibold text-sm"
                                 id="totalPrice-{{ $book->id }}">{{ $book->book_price }}
                             </span>
                         </div>
                     @endforeach
 
 
-                    <a href="{{ route('welcome') }}" class="flex font-semibold text-white text-sm mt-10">
+                    <a href="{{ route('welcome') }}"
+                        class="flex font-semibold dark:text-white text-black text-sm mt-10">
 
-                        <svg class="fill-current mr-2 text-white w-4" viewBox="0 0 448 512">
+                        <svg class="fill-current mr-2 dark:text-white text-black w-4" viewBox="0 0 448 512">
                             <path
                                 d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
                         </svg>
@@ -87,9 +89,10 @@
                 </div>
 
                 <div id="summary" class="w-1/4 px-8 py-10">
-                    <h1 class="font-semibold text-2xl border-b pb-8 text-white">Order Summary</h1>
+                    <h1 class="font-semibold text-2xl border-b pb-8 dark:text-white text-black">Order Summary</h1>
                     <div class="mt-3 mb-5">
-                        <label class="font-medium inline-block mb-3 text-sm uppercase text-white">Shipping</label>
+                        <label
+                            class="font-medium inline-block mb-3 text-sm uppercase dark:text-white text-black">Shipping</label>
                         <select class="block p-2 w-full text-sm">
                             <option>Select Shipping</option>
                             <option>Standard shipping - $10.00</option>
@@ -114,7 +117,8 @@
                         <input type="hidden" name="totalCheckOutPrice" id="totalCheckOutPriceInput"
                             value="{{ $totalCost }}">
                         <div class="border-t mt-8">
-                            <div class="flex font-semibold justify-between py-6 text-sm uppercase text-white">
+                            <div
+                                class="flex font-semibold justify-between py-6 text-sm uppercase dark:text-white text-black">
                                 <span>Total cost</span>
                                 <span id="totalCost">{{ $totalCost }}</span>
                             </div>

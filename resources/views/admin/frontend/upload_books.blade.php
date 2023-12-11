@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight mb-3">
+        <h2 class="font-semibold text-xl text-red-600 dark:text-red-200 leading-tight mb-3">
             {{ __('Profile') }}
         </h2>
     </x-slot>
@@ -25,37 +25,57 @@
                                 <x-input-label for="book_name" :value="__('Book Name')" />
                                 <x-text-input id="book_name" name="book_name" type="text" class="mt-1 block w-full"
                                     required autofocus autocomplete="book_name" />
-                                <x-input-error class="mt-2" :messages="$errors->get('book_name')" />
+                                {{-- <x-input-error class="mt-2" :messages="$errors->get('book_name')" /> --}}
+                                @if ($errors->has('book_name'))
+                                    <strong
+                                        style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_name') }}</strong>
+                                @endif
                             </div>
                             <div id="Book_Author" class="">
                                 <x-input-label for="book_author" :value="__('Book Author')" />
                                 <x-text-input id="book_author" name="book_author" type="text"
                                     class="mt-1 block w-full" required autofocus autocomplete="book_author" />
-                                <x-input-error class="mt-2" :messages="$errors->get('book_author')" />
+                                {{-- <x-input-error class="mt-2" :messages="$errors->get('book_author')" /> --}}
+                                @if ($errors->has('book_author'))
+                                    <strong
+                                        style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_author') }}</strong>
+                                @endif
                             </div>
                             <div id="Book_Price" class="">
                                 <x-input-label for="book_price" :value="__('Book Price')" />
                                 <x-text-input id="book_price" name="book_price" type="number" class="mt-1 block w-full"
                                     required autofocus autocomplete="book_price" />
-                                <x-input-error class="mt-2" :messages="$errors->get('book_price')" />
+                                {{-- <x-input-error class="mt-2" :messages="$errors->get('book_price')" /> --}}
+                                @if ($errors->has('book_price'))
+                                    <strong
+                                        style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_price') }}</strong>
+                                @endif
                             </div>
                             <div id="Book_Category">
                                 <x-input-label for="book_category" :value="__('Book Category')" />
                                 <select id="book_category" multiple required
-                                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-red-500 dark:focus:border-red-600 focus:ring-red-500 dark:focus:ring-red-600 rounded-md shadow-sm mt-1 block w-full"
                                     name="categories[]">
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                     @endforeach
                                 </select>
-                                <x-input-error class="mt-2" :messages="$errors->get('book_category')" />
+                                {{-- <x-input-error class="mt-2" :messages="$errors->get('book_category')" /> --}}
+                                @if ($errors->has('book_category'))
+                                    <strong
+                                        style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_category') }}</strong>
+                                @endif
                             </div>
                             <div id="Book_Desc">
                                 <x-input-label for="book_desc" :value="__('Book Description')" />
                                 <textarea id="book_desc" name="book_desc"
-                                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                    class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-red-500 dark:focus:border-red-600 focus:ring-red-500 dark:focus:ring-red-600 rounded-md shadow-sm mt-1 block w-full"
                                     required autofocus autocomplete="book_desc"></textarea>
-                                <x-input-error class="mt-2" :messages="$errors->get('book_desc')" />
+                                {{-- <x-input-error class="mt-2" :messages="$errors->get('book_desc')" /> --}}
+                                @if ($errors->has('book_desc'))
+                                    <strong
+                                        style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_desc') }}</strong>
+                                @endif
                             </div>
                             <div class="flex items-center gap-4">
                                 <x-primary-button type="submit">{{ __('Save') }}</x-primary-button>
@@ -69,16 +89,24 @@
                                     alt="">
                             </div>
                             <input type="file" id="image" name="book_image" onchange="loadFile(event)"
-                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-red-500 dark:focus:border-red-600 focus:ring-red-500 dark:focus:ring-red-600 rounded-md shadow-sm mt-1 block w-full"
                                 required>
-                            <x-input-error class="mt-2" :messages="$errors->get('book_image')" />
+                            {{-- <x-input-error class="mt-2" :messages="$errors->get('book_image')" /> --}}
+                            @if ($errors->has('book_image'))
+                                <strong
+                                    style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_image') }}</strong>
+                            @endif
                         </div>
                         <div id="Book_file">
                             <x-input-label for="book_file" :value="__('Book File')" />
                             <input type="file" name="book_file"
-                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm mt-1 block w-full"
+                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-red-500 dark:focus:border-red-600 focus:ring-red-500 dark:focus:ring-red-600 rounded-md shadow-sm mt-1 block w-full"
                                 required>
-                            <x-input-error class="mt-2" :messages="$errors->get('book_file')" />
+                            {{-- <x-input-error class="mt-2" :messages="$errors->get('book_file')" /> --}}
+                            @if ($errors->has('book_file'))
+                                <strong
+                                    style="font-size: .875em; margin-top: 0.25rem; color: #dc3545;">{{ $errors->first('book_file') }}</strong>
+                            @endif
                         </div>
                     </div>
                 </div>
