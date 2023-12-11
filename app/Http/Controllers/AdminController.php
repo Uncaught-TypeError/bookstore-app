@@ -41,14 +41,23 @@ class AdminController extends Controller
         $book->categories()->attach($request->input('categories'));
 
         //Book Image
-        if ($request->hasFile('book_image')) {
-            $image = $request->file('book_image');
-            $imagePath = $image->store('public/bookimage');
-            $image = Image::make(storage_path('app/' . $imagePath))->fit(800, 600);
-            $image->save();
+        // if ($request->hasFile('book_image')) {
+        //     $image = $request->file('book_image');
+        //     $imagePath = $image->store('public/bookimage');
+        //     $image = Image::make(storage_path('app/' . $imagePath))->fit(800, 600);
+        //     $image->save();
 
-            $filename = str_replace('public/', '', $imagePath);
-            // dd($filename);
+        //     $filename = str_replace('public/', '', $imagePath);
+        //     // dd($filename);
+        //     $book->book_image = $filename;
+        // } else {
+        //     $book->book_image = null;
+        // }
+
+        if ($request->hasFile('book_image')) {
+            $file = $request->file('book_image');
+            $filePath = $file->store('public/bookimages');
+            $filename = str_replace('public/', '', $filePath);
             $book->book_image = $filename;
         } else {
             $book->book_image = null;
@@ -85,14 +94,21 @@ class AdminController extends Controller
         ]);
         $book->categories()->sync($request->input('categories'));
 
-        if ($request->hasFile('book_image')) {
-            $image = $request->file('book_image');
-            $imagePath = $image->store('public/bookimage');
-            $image = Image::make(storage_path('app/' . $imagePath))->fit(800, 600);
-            $image->save();
+        // if ($request->hasFile('book_image')) {
+        //     $image = $request->file('book_image');
+        //     $imagePath = $image->store('public/bookimage');
+        //     $image = Image::make(storage_path('app/' . $imagePath))->fit(800, 600);
+        //     $image->save();
 
-            $filename = str_replace('public/', '', $imagePath);
-            // dd($filename);
+        //     $filename = str_replace('public/', '', $imagePath);
+        //     // dd($filename);
+        //     $book->book_image = $filename;
+        // }
+
+        if ($request->hasFile('book_image')) {
+            $file = $request->file('book_image');
+            $filePath = $file->store('public/bookimages');
+            $filename = str_replace('public/', '', $filePath);
             $book->book_image = $filename;
         }
 
