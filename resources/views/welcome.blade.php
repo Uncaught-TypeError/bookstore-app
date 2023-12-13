@@ -923,9 +923,16 @@
                 <h1 class="dark:text-white text-black text-3xl">All Books available at our Website!</h1>
                 <span class="dark:text-white text-black"><span class="text-red-600 underline">Put to cart</span> if you
                     want to buy</span>
+
+            </div>
+            <div class="w-full flex justify-end">
+                <button id="showCategories"
+                    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+                    style="margin-right: 10%">Show
+                    Categories</button>
             </div>
             <div class="w-full flex px-5 pt-5 pb-5">
-                <section class="flex flex-wrap justify-left items-center gap-3" style="width: 70%">
+                <section id="firstSection" class="flex flex-wrap items-center gap-3 justify-center" style="">
                     @foreach ($books as $book)
                         <div
                             class="max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -1032,7 +1039,7 @@
                     @endforeach
                 </section>
 
-                <section class="flex flex-col items-center" style="width: 30%">
+                <section id="secondSection" class="flex flex-col items-center" style="width: 30%">
                     <div class="text-3xl text-center text-black dark:text-white">Categories</div>
                     <div class="items-left">
                         <div class="px-4 py-3 text-xs max-w-xs whitespace-normal">
@@ -1076,6 +1083,25 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var button = document.getElementById('showCategories');
+            var secondSection = document.getElementById('secondSection');
+            var firstSection = document.getElementById('firstSection');
+
+            secondSection.style.display = 'none';
+            firstSection.style.width = "100%";
+
+            button.addEventListener('click', function() {
+                if (secondSection.style.display === 'none') {
+                    secondSection.style.display = 'block';
+                } else {
+                    secondSection.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
