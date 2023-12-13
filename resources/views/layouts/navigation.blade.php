@@ -7,14 +7,14 @@
                 @role('user')
                     <div class="shrink-0 flex items-center">
                         <a href="{{ route('welcome') }}">
-                            <x-application-logo class="block h-9 w-auto text-red-600 dark:text-red-600" />
+                            <x-application-logo class="block h-20 w-auto text-red-600 dark:text-red-600" />
                         </a>
                     </div>
                 @endrole
                 @role('admin')
                     <div class="shrink-0 flex items-center">
                         <a href="{{ route('welcome') }}">
-                            <x-application-logo class="block h-9 w-auto text-red-600 dark:text-red-600" />
+                            <x-application-logo class="block h-20 w-auto text-red-600 dark:text-red-600" />
                         </a>
                     </div>
                 @endrole

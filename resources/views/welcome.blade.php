@@ -899,10 +899,10 @@
                         <path d="m3.5.5h4v5.012l-2-2.012-2 2.012z" />
                     </g>
                 </svg> --}}
-                <div class="flex">
-                    <span class="dark:text-white text-black font-semibold text-5xl"><span
-                            class="text-red-600">Red</span> Flame</span>
-                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                <div class="flex justify-center items-center">
+                    <span class="dark:text-white text-black font-semibold text-5xl" style="margin-right: -100px"><span
+                            class="text-red-600">Red</span> Flower</span>
+                    {{-- <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                         xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="text-red-600" style="width: 50px">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.048 8.287 8.287 0 009 9.6a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z">
@@ -910,7 +910,8 @@
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M12 18a3.75 3.75 0 00.495-7.467 5.99 5.99 0 00-1.925 3.546 5.974 5.974 0 01-2.133-1A3.75 3.75 0 0012 18z">
                         </path>
-                    </svg>
+                    </svg> --}}
+                    <img src="{{ asset('storage/logo/logo.png') }}" class="text-red-600 w-30 h-30">
                 </div>
                 <span class="dark:text-white text-black">Read Ebook with Us</span>
             </div>
@@ -923,7 +924,7 @@
                 <span class="dark:text-white text-black"><span class="text-red-600 underline">Put to cart</span> if you
                     want to buy</span>
             </div>
-            <div class="w-full flex px-5 pt-5 mb-5">
+            <div class="w-full flex px-5 pt-5 pb-5">
                 <section class="flex flex-wrap justify-left items-center gap-3" style="width: 70%">
                     @foreach ($books as $book)
                         <div
