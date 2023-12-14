@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Category;
 use App\Models\MyCart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,12 @@ class BookController extends Controller
         $book->delete();
 
         return back()->with('success', 'Book Deleted!');
+    }
+
+    public function deleteCategory(Category $category)
+    {
+        $category->delete();
+        return back()->with('success', 'Category Deleted!');
     }
 
     public function putCart($id)

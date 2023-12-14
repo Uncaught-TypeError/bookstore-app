@@ -54,6 +54,11 @@
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('admin.category.upload')" :active="request()->routeIs('admin.category.upload')">
+                            {{ __('Upload Categories') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link :href="route('admin.books.list')" :active="request()->routeIs('admin.books.list')">
                             {{ __('Book List') }}
                         </x-nav-link>
@@ -139,6 +144,11 @@
             <div class="pb-2 space-y-1">
                 <x-responsive-nav-link :href="route('admin.books.upload')" :active="request()->routeIs('admin.books.upload')">
                     {{ __('Upload Books') }}
+                </x-responsive-nav-link>
+            </div>
+            <div class="pb-2 space-y-1">
+                <x-responsive-nav-link :href="route('admin.category.upload')" :active="request()->routeIs('admin.category.upload')">
+                    {{ __('Upload Category') }}
                 </x-responsive-nav-link>
             </div>
             <div class="pb-2 space-y-1">

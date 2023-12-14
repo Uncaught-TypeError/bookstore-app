@@ -123,4 +123,20 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Book Updated Successfully!');
     }
+
+    public function uploadCategory()
+    {
+        $categories = Category::all();
+        return view('admin.frontend.upload_category')->with('categories', $categories);
+    }
+
+    public function postCategory(Request $request)
+    {
+        $validated = $request->validate([
+            'category_name' => 'required'
+        ]);
+
+        Category::create($validated);
+        return redirect()->back()->with('success', 'Category created Successfully!');
+    }
 }
