@@ -8,4 +8,4 @@
     </path>
 </svg> --}}
 
-<img src="{{ asset('storage/logo/logo.png') }}" {{ $attributes }}>
+<img src="{{ asset('logo/logo.png') }}" {{ $attributes }}>
