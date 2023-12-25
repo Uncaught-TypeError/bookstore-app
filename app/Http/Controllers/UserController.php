@@ -7,6 +7,9 @@ use App\Models\Book;
 use App\Models\Checkout;
 use App\Models\CheckoutBooks;
 use App\Models\MyCart;
+use App\Service\BookService;
+use App\Service\MyCartService;
+use App\Service\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +17,14 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+
+    protected $bookService;
+    protected $myCartService;
+    public function __construct(BookService $bookService, MyCartService $myCartService)
+    {
+        $this->bookService = $bookService;
+        $this->myCartService = $myCartService;
+    }
     public function homepage()
     {
         return view('user.homepage');
@@ -24,72 +35,36 @@ class UserController extends Controller
         return view('dashboard');
     }
 
-    public function library()
+    public function library(UserService $userService)
     {
-        $checkouts = Checkout::where('user_id', Auth::user()->id)->get();
-        // dd($checkouts);
-
-        $allBooks = new Collection();
-
-        foreach ($checkouts as $checkout) {
-            $checkoutId = $checkout->id;
-            $checkoutBooks = CheckoutBooks::where('checkout_id', $checkoutId)->get();
-            // dd($checkoutBooks);
-            foreach ($checkoutBooks as $checkoutBook) {
-                $book = $checkoutBook->books;
-                $allBooks->push($book);
-            }
-        }
-
-        // Use unique method after merging all books to avoid duplicates
-        $allBooks = $allBooks->unique('id');
-
+        $allBooks = $userService->getUserLibrary();
         return view('user.library', ['allBooks' => $allBooks]);
     }
 
     public function downloadPdf($book_id)
     {
-        $book = Book::findOrFail($book_id);
-        $filePath = $book->book_file;
-
-        // Use the 'public' disk to get the file
-        $fileContent = Storage::disk('public')->get($filePath);
-
+        $fileContent = $this->bookService->getFileContent($book_id);
         return response($fileContent)
             ->header('Content-Type', 'application/pdf')
-            ->header('Content-Disposition', 'attachment; filename="' . $book->book_file . '.pdf"');
+            ->header('Content-Disposition', 'attachment; filename="' . $book_id . '.pdf"');
     }
 
     public function viewPdf($book_id)
     {
-        $book = Book::findOrFail($book_id);
-        $filePath = $book->book_file;
-
-        $fileContent = Storage::disk('public')->get($filePath);
-
+        $fileContent = $this->bookService->getFileContent($book_id);
         return response()->stream(
             fn () => print($fileContent),
             200,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'inline; filename="' . $book->book_file . '.pdf"',
+                'Content-Disposition' => 'inline; filename="' . $book_id . '.pdf"',
             ]
         );
     }
-
-
-
     public function userCart()
     {
-        $user_id = Auth::user()->id;
-        $cart_empty = 0;
-        $bookinCarts = MyCart::where('user_id', $user_id)->get();
-        if ($bookinCarts->isEmpty()) {
-            $cart_empty = 1;
-        }
-        return view('user.usercart')
-            ->with('bookinCarts', $bookinCarts)
-            ->with('cart_empty', $cart_empty);
+        $usercartData = $this->myCartService->getUserCart();
+        return view('user.usercart')->with($usercartData);
     }
 
     public function userCheckout(Request $request)

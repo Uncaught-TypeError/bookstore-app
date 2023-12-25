@@ -7,9 +7,12 @@ use App\Http\Requests\BookUpdateValidationRequest;
 use App\Http\Requests\BookUploadValidationRequest;
 use App\Models\Book;
 use App\Models\Category;
+use App\Service\CategoryCreateService;
+use App\Service\CategoryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -23,12 +26,14 @@ class AdminController extends Controller
     }
     public function uploadBooks()
     {
-        $categories = Category::all();
-        return view('admin.frontend.upload_books')->with('categories', $categories);
+        return view('admin.frontend.upload_books');
     }
 
     public function postBooks(BookUploadValidationRequest $request)
     {
+        // Testing Marcos
+        // dd(Str::isLength($request->book_name, 20));
+        // dd(Str::appendTo($request->book_name, '#'));
         $book = Book::create([
             'book_name' => $request->book_name,
             'book_desc' => $request->book_desc,
@@ -39,20 +44,6 @@ class AdminController extends Controller
         ]);
 
         $book->categories()->attach($request->input('categories'));
-
-        //Book Image
-        // if ($request->hasFile('book_image')) {
-        //     $image = $request->file('book_image');
-        //     $imagePath = $image->store('public/bookimage');
-        //     $image = Image::make(storage_path('app/' . $imagePath))->fit(800, 600);
-        //     $image->save();
-
-        //     $filename = str_replace('public/', '', $imagePath);
-        //     // dd($filename);
-        //     $book->book_image = $filename;
-        // } else {
-        //     $book->book_image = null;
-        // }
 
         if ($request->hasFile('book_image')) {
             $file = $request->file('book_image');
@@ -80,8 +71,7 @@ class AdminController extends Controller
 
     public function editBooks(Book $book)
     {
-        $categories = Category::all();
-        return view('admin.frontend.edit_books')->with('book', $book)->with('categories', $categories);
+        return view('admin.frontend.edit_books')->with('book', $book);
     }
 
     public function updateBooks(BookUpdateValidationRequest $request, Book $book)
@@ -93,17 +83,6 @@ class AdminController extends Controller
             'book_price' => $request->book_price,
         ]);
         $book->categories()->sync($request->input('categories'));
-
-        // if ($request->hasFile('book_image')) {
-        //     $image = $request->file('book_image');
-        //     $imagePath = $image->store('public/bookimage');
-        //     $image = Image::make(storage_path('app/' . $imagePath))->fit(800, 600);
-        //     $image->save();
-
-        //     $filename = str_replace('public/', '', $imagePath);
-        //     // dd($filename);
-        //     $book->book_image = $filename;
-        // }
 
         if ($request->hasFile('book_image')) {
             $file = $request->file('book_image');
@@ -126,17 +105,17 @@ class AdminController extends Controller
 
     public function uploadCategory()
     {
-        $categories = Category::all();
-        return view('admin.frontend.upload_category')->with('categories', $categories);
+        return view('admin.frontend.upload_category');
     }
 
-    public function postCategory(Request $request)
+    public function postCategory(Request $request, CategoryService $categoryCreateService)
     {
         $validated = $request->validate([
             'category_name' => 'required'
         ]);
 
-        Category::create($validated);
+        $categoryCreateService->createCategory($validated);
+        // Category::create($validated);
         return redirect()->back()->with('success', 'Category created Successfully!');
     }
 }

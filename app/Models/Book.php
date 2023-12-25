@@ -14,4 +14,19 @@ class Book extends Model
     {
         return $this->belongsToMany(Category::class, 'book_category');
     }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class,  'taggable');
+    }
 }

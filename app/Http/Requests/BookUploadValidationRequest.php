@@ -27,7 +27,7 @@ class BookUploadValidationRequest extends FormRequest
             'book_price' => 'required|numeric|max:100000',
             'book_author' => "required|max:255",
             'categories.*' => 'required|exists:categories,id',
-            'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'book_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg, avif|max:2048',
             'book_file' => 'required|mimes:pdf,doc,docx',
         ];
     }

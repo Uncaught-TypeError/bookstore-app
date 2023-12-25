@@ -5,7 +5,10 @@ use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
+use App\Service\BookService;
+use Carbon\Translator;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,8 +22,13 @@ use Illuminate\Support\Facades\Route;
 
 include __DIR__ . '/admin.php';
 
-Route::get('/', function () {
-    $books = Book::all();
+Route::get('/', function (BookService $bookService) {
+    //Testing Mixins
+    // $array = ['ben', 'jack', 'john', 'nick', 'tom', 'john'];
+    // dd(collect($array)->duplicateCheck('john'));
+
+    // $books = Book::all();
+    $books = $bookService->getAllBooks();
     return view('welcome')->with('books', $books);
 })->name('welcome');
 
