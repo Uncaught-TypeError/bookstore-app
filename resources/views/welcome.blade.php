@@ -925,6 +925,30 @@
                     want to buy</span>
 
             </div>
+            <div class="flex justify-center items-center">
+                <form class="w-1/2 flex flex-col justify-center items-center mt-5" method="POST" action="{{ route('book.search') }}">
+                    @csrf
+                    {{-- Responsive --}}
+                    <div class="flex w-1/2 sm:w-1/3">
+                        <div class="relative w-full">
+                            <input type="search" id="bookSearch" name="data" class="z-20 block w-full rounded-lg border border-gray-300  bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-gray-500 focus:ring-gray-500" placeholder="Search Books..." required autocomplete="off" />
+
+                            <button type="submit" class="absolute right-0 top-0 h-full rounded-r-lg border border-gray-700 bg-gray-700 p-2.5 text-sm font-medium text-black hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300">
+                                <svg class="h-4 w-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                </svg>
+                                <span class="sr-only">Search</span>
+                            </button>
+                        </div>
+                    </div>
+                    {{-- responsive --}}
+                    <span class="text-xs sm:text-sm p-2 text-gray-600 uppercase">
+                        Enter Any Books
+                    </span>
+                </form>
+
+            </div>
+
             <div class="w-full flex justify-end">
                 <button id="showCategories"
                     class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"

@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Models\Book;
+use App\Pipelines\BookSearchPipeline;
+use App\QueryFilters\BookNameSearch;
+use App\QueryFilters\CategoryNameSearch;
+use App\QueryFilters\searchByBookName;
 use App\Service\BookService;
 use Carbon\Translator;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +36,16 @@ Route::get('/', function (BookService $bookService) {
     $books = $bookService->getAllBooks();
     return view('welcome')->with('books', $books);
 })->name('welcome');
+
+Route::get('/authors', [AuthorController::class, 'index']);
+Route::get('/authors/{customerId}', [AuthorController::class, 'show']);
+
+Route::post('/book/search', function () {
+    $books = app(searchByBookName::class)->handle(request('data'));
+
+    return back()->with('books', $books);
+})->name('book.search');
+
 
 Route::middleware(['auth', 'role:user'])->group(function () {
     Route::get('/user', [UserController::class, 'homepage'])->name('user.homepage');
