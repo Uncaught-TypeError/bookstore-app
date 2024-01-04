@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Repositories\AuthorRepository;
+use App\Repositories\AuthorRepositoryInterface;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
     private $authorRepository;
-    public function __construct(AuthorRepository $authorRepository)
+    public function __construct(AuthorRepositoryInterface $authorRepository)
     {
         $this->authorRepository = $authorRepository;
     }

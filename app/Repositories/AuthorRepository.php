@@ -3,33 +3,34 @@
 namespace App\Repositories;
 
 use App\Models\Author;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 
-class AuthorRepository
+class AuthorRepository implements AuthorRepositoryInterface
 {
-    public function famous()
+    public function famous(): Collection
     {
-        $query = $this->famousCheck();
+        $query = Author::query();
+        $query = $this->famousCheck($query);
         $query = $this->followerCheck($query);
-
         return $query->orderBy('name')->get();
     }
 
     public function findById($id)
     {
-        $query = $this->famousCheck();
+        $query = Author::query();
+        $query = $this->famousCheck($query);
         $query = $this->followerCheck($query);
         return $query->where('id', $id)->firstOrFail();
     }
 
-    protected function famousCheck()
+    protected function famousCheck(Builder $query)
     {
-        return Author::where('famous', 1);
+        return $query->where('famous', 1);
     }
 
-    protected function followerCheck()
+    protected function followerCheck(Builder $query)
     {
-        return Author::where(function ($query) {
-            $query->where('followers', '>', 1000);
-        });
+        return $query->where('followers', '>', 1000);
     }
 }
